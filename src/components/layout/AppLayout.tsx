@@ -11,7 +11,6 @@ import SideBar from '../common/SideBar';
 
 const drawerWidth = 240;
 
-
 export default function AppLayout() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
