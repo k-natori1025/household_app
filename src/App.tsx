@@ -7,8 +7,37 @@ import AppLayout from './components/layout/AppLayout';
 import { theme } from './theme/theme';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Transaction } from './types';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from './firebase';
+
 
 function App() {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  useEffect(() => {
+    console.log("環境変数:", process.env.REACT_APP_FIREBASE_AUTH_DOMAIN)
+    
+    const fetchTransactions = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "Transactions"));
+        console.log(querySnapshot)
+        const transactionsData = querySnapshot.docs.map((doc) => {
+          return {
+            ...doc.data(),
+            id: doc.id,
+          } as Transaction;
+        });
+        setTransactions(transactionsData);
+      } catch (err) {
+        console.log("エラー")
+      }
+    };
+    fetchTransactions();
+   
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
