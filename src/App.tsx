@@ -17,7 +17,6 @@ function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
-    console.log("環境変数:", process.env.REACT_APP_FIREBASE_AUTH_DOMAIN)
     
     const fetchTransactions = async () => {
       try {
